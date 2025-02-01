@@ -29,7 +29,7 @@ export function MonthlyCalendar({ selectedDate, onDateSelect }: CalendarProps) {
   // Cuma (5), Cumartesi (6) ve Pazar (0) günlerini engelleyen fonksiyon
   const isDisabled = (date: Date) => {
     const dayOfWeek = getDay(date); 
-    return dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0;
+    return dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0 || dayOfWeek === 4;
   };
 
   // Tarihlerin seçilebilir olup olmadığını kontrol eden fonksiyon
