@@ -43,7 +43,7 @@ export function MonthlyCalendar({ selectedDate, onDateSelect }: CalendarProps) {
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-          disabled={isBefore(subMonths(currentMonth, 1), today)}
+          disabled={isBefore(subMonths(currentMonth, 0), today)}
           className="p-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-6 h-6 text-gray-700" />
