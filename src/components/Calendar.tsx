@@ -14,66 +14,65 @@ export function MonthlyCalendar({ selectedDate, onDateSelect }: CalendarProps) {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today);
 
-  // Mevcut ayın başlangıç ve bitiş tarihleri
   const startDate = startOfMonth(currentMonth);
   const endDate = endOfMonth(currentMonth);
   const daysInMonth = eachDayOfInterval({ start: startDate, end: endDate });
 
-  // Tarihlerin dolu olup olmadığını kontrol eden fonksiyon
   const isDateBooked = (date: Date) => {
     return bookedDates.some(
       (bookedDate) => format(bookedDate, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
     );
   };
 
-  // Cuma (5), Cumartesi (6) ve Pazar (0) günlerini engelleyen fonksiyon
   const isDisabled = (date: Date) => {
     const dayOfWeek = getDay(date); 
-    return dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0 || dayOfWeek === 4;
+    return dayOfWeek === 4 || dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0;
   };
 
-  // Tarihlerin seçilebilir olup olmadığını kontrol eden fonksiyon
   const isDateSelectable = (date: Date) => {
     return !isBefore(date, today) && !isDateBooked(date) && !isDisabled(date);
   };
 
+  const handleDateSelect = async (date: Date) => {
+    if (isDateSelectable(date)) {
+      onDateSelect(date);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      {/* Takvim Başlığı ve Ay Değiştirme Butonları */}
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
           disabled={isBefore(subMonths(currentMonth, 0), today)}
-          className="p-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300"
         >
-          <ChevronLeft className="w-6 h-6 text-gray-700" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
 
-        <h2 className="text-xl font-semibold text-gray-800">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
           {format(currentMonth, 'MMMM yyyy', { locale: tr })}
         </h2>
 
         <button
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-          className="p-2"
+          className="p-2 text-gray-700 dark:text-gray-300"
         >
-          <ChevronRight className="w-6 h-6 text-gray-700" />
+          <ChevronRight className="w-6 h-6" />
         </button>
       </div>
 
-      {/* Hafta Günleri */}
       <div className="grid grid-cols-7 gap-2 mb-2">
         {['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'].map((day) => (
-          <div key={day} className="text-center font-medium text-gray-600 text-sm py-2">
+          <div key={day} className="text-center font-medium text-gray-600 dark:text-gray-400 text-sm py-2">
             {day}
           </div>
         ))}
       </div>
 
-      {/* Takvim Günleri */}
       <div className="grid grid-cols-7 gap-2">
         {Array(getDay(startDate) === 0 ? 6 : getDay(startDate) - 1).fill(null).map((_, i) => (
-          <div key={i} className="text-center text-gray-300 text-sm p-2"></div>
+          <div key={i} className="text-center text-gray-300 dark:text-gray-700 text-sm p-2"></div>
         ))}
         {daysInMonth.map((date) => {
           const isBooked = isDateBooked(date);
@@ -85,14 +84,14 @@ export function MonthlyCalendar({ selectedDate, onDateSelect }: CalendarProps) {
           return (
             <button
               key={date.toISOString()}
-              onClick={() => isSelectable && onDateSelect(date)}
+              onClick={() => handleDateSelect(date)}
               disabled={!isSelectable}
               className={`
-                p-2 rounded-lg text-sm relative
-                ${isSelected ? 'bg-indigo-600 text-white' : ''}
-                ${isBooked || isDisabled(date) ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}
-                ${isSelectable ? 'hover:bg-indigo-50 cursor-pointer' : ''}
-                ${!isBooked && !isSelected ? 'text-gray-700' : ''}
+                p-2 rounded-lg text-sm relative transition-colors duration-200
+                ${isSelected ? 'bg-indigo-600 text-white dark:bg-indigo-500' : ''}
+                ${isBooked || isDisabled(date) ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed' : ''}
+                ${isSelectable ? 'hover:bg-indigo-50 dark:hover:bg-indigo-900 cursor-pointer' : ''}
+                ${!isBooked && !isSelected ? 'text-gray-700 dark:text-gray-300' : ''}
               `}
             >
               {format(date, 'd', { locale: tr })}
