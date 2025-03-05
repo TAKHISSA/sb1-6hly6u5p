@@ -26,7 +26,7 @@ export function AstrologerInfo({ selectedDate }: AstrologerInfoProps) {
         </div>
         <div>
           <h3 className="font-medium text-gray-700 dark:text-gray-300">Uzmanlık</h3>
-          <p className="text-gray-600 dark:text-gray-400">Astroloji, Tarot, MBTI, Enneagram</p>
+          <p className="text-gray-600 dark:text-gray-400">Astroloji, Tarot</p>
         </div>
         <div>
           <h3 className="font-medium text-gray-700 dark:text-gray-300">Deneyim</h3>
