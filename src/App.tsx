@@ -44,8 +44,12 @@ function App() {
             Astroloji Danışmanlık Randevu Sistemi
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Pazartesi'den Perşembe'ye kadar randevu alabilirsiniz.
+            Pazartesi'den Çarşamba'ya kadar randevu alabilirsiniz.
             Her gün için tek randevu mevcuttur.
+          </p>
+          <p className="text-gray-600 dark:text-gray-300">
+            Not: Randevu oluşturduktan sonra size gelen maile en geç 7 gün içerisinde 'Randevumu onaylıyorum' şeklinde cevap vermeniz gerekir yoksa randevunuz silinir.
+
           </p>
         </div>
 
